@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-mangools.mangools",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing", "Analytics"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/mangools/n8n-nodes-mangools?tab=readme-ov-file#credentials"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/mangools/n8n-nodes-mangools?tab=readme-ov-file"
+			}
+		]
+	}
+}

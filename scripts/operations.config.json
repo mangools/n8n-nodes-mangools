@@ -1,0 +1,243 @@
+{
+  "$comment": "Hand-authored selection input for scripts/generate-operations.mjs. This file decides WHICH spec operations the node exposes, identified by operationId, and what they are CALLED in the n8n UI. Everything else -- HTTP method, URL, parameters, types, required flags, defaults, parameter descriptions, quota pool -- is read from the OpenAPI document fetched at build time and is never written here. `rootProperty` names the response array that is split into one n8n item per record; the build fails when the spec response has no such array.",
+  "selectionRule": "Every read operation that returns SEO data, across all tool tags. Excluded: all mutations that change state, request-history endpoints, saved-list, favorites, export, tag and report management, the deprecated keyword trends operation, and the legacy single-tracking lookup.",
+  "resources": [
+    {
+      "value": "account",
+      "name": "Account",
+      "description": "Quota and rate-limit state for the API key",
+      "operations": [
+        {
+          "value": "getLimits",
+          "operationId": "get-kwfinder-limits",
+          "name": "Get Limits",
+          "action": "Get account limits and remaining quota",
+          "description": "Get remaining quota for every Mangools resource pool"
+        }
+      ]
+    },
+    {
+      "value": "kwfinder",
+      "name": "KWFinder",
+      "description": "Keyword research: suggestions, competitor keywords and keyword difficulty",
+      "operations": [
+        {
+          "value": "getRelatedKeywords",
+          "operationId": "get-kwfinder-related-keywords",
+          "name": "Get Related Keywords",
+          "action": "Get related keywords for a seed keyword",
+          "description": "Get keyword suggestions with search volume, CPC and difficulty for a seed keyword",
+          "rootProperty": "keywords"
+        },
+        {
+          "value": "getCompetitorKeywords",
+          "operationId": "get-kwfinder-competitor-keywords",
+          "name": "Get Competitor Keywords",
+          "action": "Get keywords a domain ranks for",
+          "description": "Get the keywords a domain or URL already ranks for",
+          "rootProperty": "keywords"
+        },
+        {
+          "value": "getSuggestedKeywords",
+          "operationId": "get-kwfinder-suggested-keywords",
+          "name": "Get Suggested Keywords",
+          "action": "Get suggested keywords for a URL",
+          "description": "Get keyword suggestions derived from the content of a URL",
+          "rootProperty": "keywords"
+        },
+        {
+          "value": "getCompetitorDomains",
+          "operationId": "get-kwfinder-competitor-domain",
+          "name": "Get Competitor Domains",
+          "action": "Get competitor domains for a URL",
+          "description": "Get the domains that compete with a URL in organic search"
+        },
+        {
+          "value": "getUrlDifficulty",
+          "operationId": "get-kwfinder-kd-url-metrics",
+          "name": "Get URL Difficulty Metrics",
+          "action": "Get keyword difficulty metrics for a URL",
+          "description": "Get the authority and link metrics KWFinder uses to compute keyword difficulty"
+        }
+      ]
+    },
+    {
+      "value": "serpchecker",
+      "name": "SERPChecker",
+      "description": "Live SERP lookups and per-result SEO metrics",
+      "operations": [
+        {
+          "value": "getSerp",
+          "operationId": "get-serpchecker-serps",
+          "name": "Get SERP",
+          "action": "Get the SERP for a keyword",
+          "description": "Get the live search results for a keyword with SEO metrics for every result"
+        },
+        {
+          "value": "getUrlMetrics",
+          "operationId": "get-serpchecker-url-metrics",
+          "name": "Get URL Metrics",
+          "action": "Get SEO metrics for a URL",
+          "description": "Get authority, trust and link metrics for a single URL"
+        }
+      ]
+    },
+    {
+      "value": "serpwatcher",
+      "name": "SERPWatcher",
+      "description": "Rank tracking: trackings, tracked keywords and rank statistics",
+      "operations": [
+        {
+          "value": "getManyTrackings",
+          "operationId": "get-serpwatcher-trackings",
+          "name": "Get Many Trackings",
+          "action": "Get many rank trackings",
+          "description": "Get every rank tracking on the account"
+        },
+        {
+          "value": "getTrackingDetail",
+          "operationId": "get-serpwatcher-trackings-by-tracking-id-detail",
+          "name": "Get Tracking Detail",
+          "action": "Get a rank tracking with its keywords",
+          "description": "Get one tracking together with its keywords and their rank history"
+        },
+        {
+          "value": "getManyTrackedKeywords",
+          "operationId": "get-serpwatcher-trackings-by-tracking-id-tracked-keywords",
+          "name": "Get Many Tracked Keywords",
+          "action": "Get many tracked keywords",
+          "description": "Get the tracked keywords of one tracking with their current ranks"
+        },
+        {
+          "value": "getTrackingStats",
+          "operationId": "post-serpwatcher-trackings-by-tracking-id-stats",
+          "name": "Get Tracking Stats",
+          "action": "Get rank statistics for a tracking",
+          "description": "Get aggregated rank statistics for a tracking over a date range"
+        }
+      ]
+    },
+    {
+      "value": "aiSearchWatcher",
+      "name": "AI Search Watcher",
+      "description": "Brand visibility inside AI assistant answers",
+      "operations": [
+        {
+          "value": "getManyMonitors",
+          "operationId": "get-aiwatcher-monitors",
+          "name": "Get Many Monitors",
+          "action": "Get many AI monitors",
+          "description": "Get every AI Search Watcher monitor on the account",
+          "rootProperty": "monitors"
+        },
+        {
+          "value": "getMonitor",
+          "operationId": "get-aiwatcher-monitor-by-id",
+          "name": "Get Monitor",
+          "action": "Get an AI monitor",
+          "description": "Get one monitor with its visibility history and aggregated stats"
+        },
+        {
+          "value": "getManyMonitorPrompts",
+          "operationId": "get-aiwatcher-monitor-by-id-prompts",
+          "name": "Get Many Monitor Prompts",
+          "action": "Get many prompts of an AI monitor",
+          "description": "Get the prompts a monitor asks the AI models"
+        },
+        {
+          "value": "getPrompt",
+          "operationId": "get-aiwatcher-prompt-by-id",
+          "name": "Get Prompt",
+          "action": "Get an AI monitor prompt",
+          "description": "Get one prompt with its per-model metrics, cited domains and time series"
+        },
+        {
+          "value": "getManyModels",
+          "operationId": "get-aiwatcher-models",
+          "name": "Get Many Models",
+          "action": "Get many AI models",
+          "description": "Get the AI models available to monitor",
+          "rootProperty": "models"
+        }
+      ]
+    },
+    {
+      "value": "linkminer",
+      "name": "LinkMiner",
+      "description": "Backlink discovery and link metrics",
+      "operations": [
+        {
+          "value": "getManyBacklinks",
+          "operationId": "get-linkminer-links",
+          "name": "Get Many Backlinks",
+          "action": "Get many backlinks for a URL",
+          "description": "Get the backlinks pointing at a URL or domain",
+          "rootProperty": "links"
+        },
+        {
+          "value": "getUrlMetrics",
+          "operationId": "get-linkminer-url-metrics",
+          "name": "Get URL Metrics",
+          "action": "Get link metrics for a URL",
+          "description": "Get link and authority metrics for a single URL"
+        }
+      ]
+    },
+    {
+      "value": "siteprofiler",
+      "name": "SiteProfiler",
+      "description": "Domain-level SEO profile: authority, competitors, top content",
+      "operations": [
+        {
+          "value": "getOverview",
+          "operationId": "get-siteprofiler-overview",
+          "name": "Get Overview",
+          "action": "Get the SEO overview of a domain",
+          "description": "Get authority, trust and traffic metrics for a domain"
+        },
+        {
+          "value": "getManyCompetitors",
+          "operationId": "get-siteprofiler-competitors",
+          "name": "Get Many Competitors",
+          "action": "Get many competitors of a domain",
+          "description": "Get the domains that compete with a domain in organic search"
+        },
+        {
+          "value": "getBacklinkProfile",
+          "operationId": "get-siteprofiler-backlink-profile",
+          "name": "Get Backlink Profile",
+          "action": "Get the backlink profile of a domain",
+          "description": "Get the aggregated backlink profile of a domain"
+        },
+        {
+          "value": "getManyTopContent",
+          "operationId": "get-siteprofiler-top-content",
+          "name": "Get Many Top Content",
+          "action": "Get the top content of a domain",
+          "description": "Get the best performing pages of a domain"
+        }
+      ]
+    },
+    {
+      "value": "location",
+      "name": "Location",
+      "description": "Geotargeting locations shared by every Mangools tool",
+      "operations": [
+        {
+          "value": "search",
+          "operationId": "get-mangools-locations",
+          "name": "Search",
+          "action": "Search geotargeting locations",
+          "description": "Search geotargeting locations by name to find a location ID"
+        },
+        {
+          "value": "get",
+          "operationId": "get-mangools-locations-by-location",
+          "name": "Get",
+          "action": "Get a geotargeting location",
+          "description": "Get one geotargeting location by its ID"
+        }
+      ]
+    }
+  ]
+}
